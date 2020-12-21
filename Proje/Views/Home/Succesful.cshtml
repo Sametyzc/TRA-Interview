@@ -1,0 +1,18 @@
+﻿@{
+    ViewBag.Title = "Home Page";
+}
+<div class="col-md-12">
+    <div class="panel panel-primary">
+        <div class="panel-body">
+            <div class="form-group col-md-12">
+                <label>@ViewBag.Message işlemi başarı ile gerçekleşti.</label>
+            </div>
+
+            <div class="form-group col-md-12">
+                <div style="float: left; display:inline-block;">
+                    @Html.ActionLink("Ana sayfa için tıklayın.", "Index",null,new { @class= "btn btn-success" })
+                </div>
+            </div>
+        </div>
+    </div><hr />
+</div>

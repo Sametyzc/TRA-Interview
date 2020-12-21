@@ -1,0 +1,83 @@
+﻿@using Proje.Models
+@model Proje.Models.Music
+@{
+    ViewBag.Title = "UpdateView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<div class="col-md-12">
+    <div class="panel panel-primary">
+        <div class="panel-heading">
+            <h3 class="panel-title">Please update the details below.</h3>
+        </div>
+        <div class="panel-body">
+            <div class="form-group col-md-12">
+                <label>Music Name</label>
+                <input type="text" name="MusicName" id="MusicName" class="form-control" value="@Model.MusicName" required="required" />
+            </div>
+
+            <div class="form-group col-md-12">
+                <label>Album Name</label>
+                <input type="text" name="AlbumName" id="AlbumName" class="form-control" value="@Model.AlbumName" />
+            </div>
+
+            <div class="form-group col-md-12">
+                <label>Artist</label>
+                <input type="text" name="Artist" id="Artist" class="form-control" value="@Model.Artist" required="required" />
+            </div>
+
+            <div class="form-group col-md-12">
+                <label>Duration</label>
+                <input type="text" name="Duration" id="Duration" class="form-control" value="@Model.Duration" />
+            </div>
+
+            <div class="form-group col-md-12">
+                <label>Release Year</label>
+                <input type="number" name="ReleaseYear" id="ReleaseYear" class="form-control" value="@Model.ReleaseYear" min="1800" max="2020" />
+            </div>
+
+            <div class="form-group col-md-12">
+                <div style="float: left; display:inline-block;">
+                    <input class="btn btn-success" name="submitButton" id="btnUpdate" value="Update" type="button">
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+@section Scripts
+{
+    <script type="text/javascript">
+        $(function () {
+            $("#btnUpdate").click(function () {
+            var std = {};
+            std.Id = @Model.Id;
+            std.MusicName = $("#MusicName").val();
+            std.AlbumName = $("#AlbumName").val();
+            std.Artist = $("#Artist").val();
+            std.Duration = $("#Duration").val();
+            std.ReleaseYear = $("#ReleaseYear").val();
+            $.ajax({
+                type: "POST",
+                url: '@Url.Action("updateMusic")',
+                data: '{std: ' + JSON.stringify(std) + '}',
+                dataType: "json",
+                contentType: "application/json; charset=utf-8",
+                success: function (result) {
+                    if (result.redirectUrl !== undefined) {
+                        window.location.replace(result.redirectUrl);
+                        LoadData();
+                    }
+                    
+                },
+                error: function () {
+                    alert("Müzik adı ve artist girdiğinizden emin olun!");
+                }
+            });
+            return false;
+        });
+        });
+    </script>
+} 
